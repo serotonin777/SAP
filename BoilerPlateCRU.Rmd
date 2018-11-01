@@ -1,0 +1,168 @@
+---
+title: Testing Boilerplate & Statistical Analysis Plan
+  
+subtitle: |
+  
+author: 
+date: '`r strftime(Sys.time(),format="%d-%b-%Y at %H:%M")` [See notes](#About)'
+params:
+  datafile: 
+  InternalUse: FALSE
+  fastknit: FALSE
+output:
+  word_document:
+    reference_docx: R:/CRU Epibiostat/Rmarkdown knitr/templateLandscape8ptArialNarrowMargins.docx
+---
+
+
+```{r, include=F}
+# Under params: datafile use the appropriate address to read in your data
+# "R:/CRU Data/ /Master/.RData"
+```
+
+
+```{r Fast Knit, echo=FALSE}
+
+# 1-Fast knit:
+# 
+# * A parameter to specify "fast knitting" in R Markdown, i.e. low resolution figures and flowcharts:
+# 
+# -In the params section of the YAML header ...
+# 
+#   params:
+#     fastknit: FALSE
+# 
+# -Immediately afterwards, put the first two chunks as: 
+if (params$fastknit) {
+  flowchartwidth <- 1000
+  dpi <- 72
+} else {
+  flowchartwidth <- 3000
+  dpi <- 4*72  
+}
+
+# Later on if a flowchart is being generated, the pixel width can be specified using flowchartwidth:
+# 
+#  Note: create a sub-folder in your project's "Analysis" folder called "flowcharts"
+
+# grVizToPNG(flowchart,width=flowchartwidth,folder="flowcharts")
+# ![](flowcharts/flowchart.png){ height=2.5in }
+```
+
+
+```{r Setup, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment="",dpi=dpi, fig.width=9, fig.height=6)
+```
+
+Note: to include analysis plan use the chunk below; to not have it included set eval=FALSE in the code chunk label. The analysis plan can be set up as a separate .Rmd file in the same folder as your analysis .Rmd. 
+
+```{r Analysis Plan, child="SAPv1.Rmd"}
+
+```
+
+
+
+
+```{r Attach Packages, message=FALSE,warning=FALSE, include=FALSE}
+warn <- options()$warn
+options(warn=-1)  # Prevents warnings messages in R Markdown window
+# some common packages
+library(Hmisc)
+library(tidyr)
+library(dplyr)
+library(beeswarm)
+library(CRUmisc)
+library(CRUmarkdown)
+library(vtree)
+library(forcats)#helpful for factors
+library(rms)
+library(foreign)#reading data in from other formats (SPSS, Excel)
+library(broom) #Converts models to 'tidy' dataframes for easier manipulation
+library(ggplot2)
+library(ggpubr)
+library(lubridate)
+options(warn=warn)
+```
+
+```{r Attach Packages for FlowCharts, include=FALSE}
+#Packages for flowcharts
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
+library(png)
+```
+
+
+```{r Read in Data, eval=F}
+env<-attach(params$datafile)
+z <-get("data", envir=env)  
+detach()
+original <- z
+```
+
+
+```{r Datafile Information}
+#Just uncomment  (ctrl+shift+c) and copy past inline under the above code chunk to display information about your datafile
+# **Data file information** |
+# --------------------------|--------------------------------------------------------------------------
+# **Filename**              | `r params$datafile`
+# **Last modified**         | `r strftime(file.info(params$datafile)$mtime,format="%d-%b-%Y at %H:%M")` 
+# **Dimensions**            | `r nrow(z)` rows, `r ncol(z)` columns
+
+```
+
+
+
+```{r, results="asis",echo=FALSE}
+cat("
+# Header
+Some **stuff**
+
+# Another header
+Some more stuff
+")
+```
+
+
+#########
+
+# Methods
+
+Central tendency (mean) and dispersion (SD) statistics were produced for continuous variables and frequency distributions for categorical variables. The level for statistical significance was set *a priori* at &leq; 0.05. All statistical analyses were performed using R statistical software version 3.5.1 [ ] (R Core Team., Vienna, Austria.).
+
+# References
+
+[ ]: R Core Team (2018). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.  URL https://www.R-project.org/.
+
+
+
+```{r StopHere,eval=F}
+cat("Stopped due to call to knitr::knit_exit()")
+knitr::knit_exit()
+```
+
+#########
+
+# CRU boilerplate function:
+
+`r boilerplate()`
+
+#########
+
+# Context information (For reproducibility purposes only)
+
+```{r, echo=FALSE,results="asis"}
+source("R:/CRU Epibiostat/R/showContext.R")
+if (isTRUE(getOption("knitr.in.progress"))) {
+  showContext()
+}
+```
+
+```{r}
+if (isTRUE(getOption("knitr.in.progress"))) {
+  devtools:::session_info()
+}
+```
+
+
+

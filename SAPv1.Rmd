@@ -1,0 +1,136 @@
+---
+title: Statistical Analysis Plan
+subtitle: version 
+author: 
+date: '`r strftime(Sys.time(),format="%d-%b-%Y at %H:%M")`'
+params:
+  datafile: 
+output:
+  word_document:
+    reference_docx: R:/CRU Epibiostat/projects/Mary-Ann/SAP/TemplateStatisticalAnalysisPlan.docx
+---
+
+
+```{r setup child, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning=FALSE, message=FALSE, include=FALSE}
+library(tidyr)
+library(dplyr)
+library(CRUmisc)
+library(CRUmarkdown)
+library(vtree)
+```
+
+
+```{r  Changes to SAP, results="asis",echo=FALSE}
+cat("
+## Describe changes from last version and provide reason(s): 
+")
+```
+
+
+```{r Study Name and ID, results="asis",echo=FALSE}
+cat("
+
+## Study Name and Project ID:  
+
+")
+```
+
+
+```{r Timelines, results="asis",echo=FALSE}
+cat("
+
+## Key dates/timelines:
+
+")
+```
+
+```{r Team, results="asis",echo=FALSE}
+cat("
+
+## Research Team:
+
+#### Principal Investigator(s):
+#### Co-Investigator(s):
+#### Primary Contact: 
+ 
+")
+```
+
+```{r Objectives and Outcomes, results="asis",echo=FALSE}
+cat("
+
+## Research objectives: 
+
+### Primary outcome: 
+
+### Secondary outcome(s): 
+
+")
+```
+
+```{r Target Audience, results="asis",echo=FALSE}
+cat("
+
+
+### Target Journal: 
+### Target Forum (presentation, abstract): 
+
+")
+```
+
+
+```{r Planned Analyses, results="asis",echo=FALSE}
+cat("
+
+## Planned Analyses: 
+
+")
+```
+
+# Some Sample Tables:
+
+## Table 1.i. Demographics/Clinical Characteristics (1 group)
+
+**Variable** | **Value**
+---------------------|---------------
+   |  |
+   |  |
+   |  |
+   |  |
+   
+\newline   
+
+## Table 1.ii. Demographics/Clinical Characteristics (2 groups)
+
+**Variable** | **Group 1**  | **Group 2**
+---------------------|---------------|---------------
+   |   |   |
+   |   |   |
+   |   |   |
+   |   |   |
+   
+
+#########
+
+```{r,results="asis",echo=FALSE}
+cat("		
+> Notes:
+
+>> The Statistical Analysis Plan will need to be revised in the event of:
+
+>> - updates to the study data.
+
+>> -	deviations from the planned analyses during the analysis phase of the project.
+
+
+>> Such changes will substantially lengthen timelines.	
+					
+")					
+
+```
+
+
